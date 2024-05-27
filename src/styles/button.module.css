@@ -1,0 +1,47 @@
+.btn,.outline{
+    width: 140px;
+    height: 40px;
+    border-radius: 20px;
+    border-radius: 1px solid gray;
+    background-color: #000228;
+    color: white;
+    transition: all ease-in-out 1s;
+}
+.btn:hover{
+   background-color: #010545;
+   cursor: pointer;
+   transform: scale(1.1);
+}
+.btn_large{
+    width: 180px;
+    height: 65px;
+    border-radius: 45px;
+}
+.outline{
+    background-color: white !important;
+    color: gray;
+    font-weight: normal;
+    border: 1px solid gray;
+}
+.outlline_text_color{
+    color: #010545;
+}
+.outlline_text_color:hover{
+    background-color: #010545 !important;
+    color: white;
+}
+.rounded_outline{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.rounded_active{
+    background-color: #000228 !important;
+    color: white;
+}
+.danger_btn{
+    background-color: red;
+}
+.danger_btn:hover{
+    background-color: #870305;
+}
