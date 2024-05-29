@@ -1,25 +1,28 @@
+/* eslint-disable react/prop-types */
 import { FaLeftLong, FaRightLong } from "react-icons/fa6";
 import styles from '../styles/home.module.css'
+import { useEffect } from "react";
 
-// eslint-disable-next-line react/prop-types
-export default function Paginator({currentIndex, setCurrentIndex, size=1}) {
+export default function Paginator({paging,activeCategory, setPaging, size=1}) {
 
   const buttonAction=(action)=>{
     if(action === 'next'){
-      if(currentIndex === size-1){
-        setCurrentIndex(0);
-      }else{
-        setCurrentIndex((currentIndex)=> currentIndex+1);
-      }
-    }else{
-      if(currentIndex === 0){
-        setCurrentIndex(size-1);
+      if(paging?.stop >= size){
         return;
       }else{
-        setCurrentIndex(currentIndex-1);
+        let endValue = size - paging?.stop > 6 ? paging.stop + 6 : paging.stop + (size - paging?.stop) 
+        setPaging({...paging, start: paging?.stop, stop: paging?.stop + endValue})
+      }
+    }else{
+      if(paging.start <= 1){
+        return;
+      }else{
+        const startValue = paging?.start - 6 <= 0 ? 1 : paging?.start - 6
+        setPaging({...paging, start: startValue, stop: paging?.start})
       }
     }
   }
+ 
   
   return (
     <div className={styles.pagination}>

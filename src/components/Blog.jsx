@@ -1,12 +1,15 @@
+/* eslint-disable react/prop-types */
+import { useContext } from 'react';
 import styles from '../styles/home.module.css'
 import OutlineButton from './Buttons/OutlineButton'
 import { useNavigate } from 'react-router-dom'
+import { MyContext } from '../context/MyContext';
 
-// eslint-disable-next-line react/prop-types
-export default function Blog({date,img,title,content,index}) {
+
+export default function Blog({date,img,title,content}) {
   const navigate = useNavigate();
-  // eslint-disable-next-line react/prop-types
-  const truncatedContent = content.split(" ").splice(0,100).join(" ")
+  const truncatedContent = content.substring(0, 100)
+  const {blogList} = useContext(MyContext);
 
   return (
     <div className={styles.blog}>
@@ -17,7 +20,7 @@ export default function Blog({date,img,title,content,index}) {
         </span><br />
 
         <div className={styles.btn_container}>
-        <OutlineButton onClick={()=> navigate(`/blog-detail/${index+1}`)} text={'Read more ...'} color='primary'/>
+        <OutlineButton onClick={()=> navigate(`/blog-detail/${blogList.findIndex((item)=> item.title === title && item.date === date)+1}`)} text={'Read more ...'} color='primary'/>
         </div>
   </div>
   )

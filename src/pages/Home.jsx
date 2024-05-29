@@ -16,7 +16,10 @@ import { MyContext } from '../context/MyContext';
 export default function Home() {
   const [blogCategories,setBlogCategories] = useState([{}])
   const [activeCategory,setActiveCategory] = useState({})
-  const [currentIndex,setCurrentIndex] = useState(0)
+  const [paging,setPaging] = useState({
+    start: 1,
+    stop: 6
+  })
   const {blogList} = useContext(MyContext);
 
 
@@ -43,6 +46,10 @@ export default function Home() {
     })
 
     setBlogCategories([...arr]);
+    setPaging({
+      start: 1,
+      stop: 6
+    })
     setActiveCategory(category)
   }
 
@@ -101,13 +108,13 @@ export default function Home() {
               {/* List of blogs */}
               <div className={styles.blogs_list}>
                   {
-                    blogList?.filter(item => item?.category?.toLocaleLowerCase() == activeCategory?.title?.toLocaleLowerCase())?.map((blog,index)=>(
-                        <Blog key={blog?.id + index.toString()} img={activeCategory?.image} date={blog?.date} title={blog?.title} index={index} content={blog?.content}/>
+                    blogList?.filter(item => item?.category?.toLocaleLowerCase() == activeCategory?.title?.toLocaleLowerCase())?.slice(paging.start-1,paging.stop)?.map((blog,index)=>(
+                        <Blog key={blog?.id + index.toString()} img={activeCategory?.image} date={blog?.date} title={blog?.title} content={blog?.content}/>
                     ))
                   }
 
                   {
-                  blogList?.filter(item => item?.category?.toLocaleLowerCase() == activeCategory?.title?.toLocaleLowerCase()).length <=0 && 
+                  blogList?.filter(item => item?.category?.toLocaleLowerCase() == activeCategory?.title?.toLocaleLowerCase()).slice(paging.start-1,paging.stop) <=0 && 
                   <div className={styles.blog_not_found}>
                     <Zoom>
                     <img src={IMAGES.not_found} />
@@ -118,7 +125,13 @@ export default function Home() {
               </div>
               {/* End of blogs */}
 
-              <Paginator size={5} setCurrentPage={setCurrentIndex} currentIndex={currentIndex} />
+              <Paginator size={
+                blogList?.filter(item => item?.category?.toLocaleLowerCase() == activeCategory?.title?.toLocaleLowerCase()).length
+              } 
+              paging={paging}
+              setPaging = {setPaging}
+              activeCategory={activeCategory}
+              />
 
           </div>
 
